@@ -30,3 +30,41 @@
     transform: rotate(360deg);
   }
 }
+
+/* ===============
+CUSTOM CSS
+=============== */
+
+*{
+  text-decoration: none
+}
+
+.navbar{
+  background-color: #282c34!important;
+}
+
+.nav-link > a{
+  color: #61dafb
+}
+
+.nav-link > a:hover{
+  color: #61dafb;
+  font-weight: bold;
+  text-decoration: none
+}
+
+.navbar-brand > a {
+  color: #61dafb;
+  font-weight: bold;
+  font-size: 40px;
+}
+.navbar-brand > a:hover {
+  color: #61dafb;
+  font-weight: bold;
+  text-decoration: none
+}
+
+.nav-link > .active{
+  /* color: red; */
+  font-weight: bold
+}
