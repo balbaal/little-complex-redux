@@ -44,7 +44,8 @@ export const fetchPosts = () => dispatch => {
   });
 };
 
-export const newPost = (data) => dispatch => {  
+export const newPost = (contents, newCont) => dispatch => {  
+  let data = [...contents, newCont]
   dispatch({
     type: NEW_POST,
     payload: data

@@ -15,10 +15,10 @@ import { connect } from "react-redux";
 import { fetchPosts } from "../actions/postAction";
 
 class C_Home extends React.Component {
-
   componentWillMount() {
     this.props.fetchPosts();
   }
+
   render() {
     return (
       <div className="container">

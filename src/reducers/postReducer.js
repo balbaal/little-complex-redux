@@ -14,9 +14,10 @@ export default function(state = intialState, action) {
       };
 
     case NEW_POST:
+    console.log(action.payload)
       return {
         ...state,
-        item: action.payload
+        items: action.payload
       }
 
     case DELETE_POST:

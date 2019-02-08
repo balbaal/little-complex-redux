@@ -21,7 +21,7 @@ class C_ContentManage extends React.Component {
       modal: false,
       title: "",
       description: "",
-      imageUrl: ""
+      image: ""
     };
   }
 
@@ -38,22 +38,18 @@ class C_ContentManage extends React.Component {
   onSubmitContent = ev => {
     ev.preventDefault();
     let data = {
-      id: Math.floor(Math.random() * 50) + 1,
+      id: Math.floor(Math.random() * 100) + 1,
       title: this.state.title,
       description: this.state.description,
-      imageUrl: this.state.imageUrl
+      image: this.state.image
     };
 
-    this.props.newPost(data);
+    this.props.newPost(this.props.contents, data);
   };
 
   onDeleteContent = id => {
     this.props.deletePost(this.props.contents, id);
   };
-
-  componentWillReceiveProps(newProps) {
-    this.props.contents.unshift(newProps.newContent);
-  }
 
   toggle = () => {
     this.setState(prevState => ({
@@ -134,10 +130,10 @@ class C_ContentManage extends React.Component {
                 />
               </FormGroup>
               <FormGroup>
-                <Label for="imageUrl">Image Url</Label>
+                <Label for="image">Image Url</Label>
                 <Input
                   type="text"
-                  name="imageUrl"
+                  name="image"
                   onChange={this.onChangeContent}
                 />
               </FormGroup>
@@ -155,8 +151,7 @@ class C_ContentManage extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  contents: state.posts.items,
-  newContent: state.posts.item
+  contents: state.posts.items
 });
 
 export default connect(
