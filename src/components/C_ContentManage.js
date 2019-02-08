@@ -26,7 +26,10 @@ class C_ContentManage extends React.Component {
   }
 
   componentWillMount() {
-    this.props.fetchPosts();
+    if (localStorage.getItem("contents") == null) {
+      this.props.fetchPosts();
+      localStorage.setItem("contents", true);
+    }
   }
 
   onChangeContent = ev => {
@@ -58,6 +61,10 @@ class C_ContentManage extends React.Component {
   };
 
   render() {
+    // clear contents when close browser
+    window.onbeforeunload = function() {
+      localStorage.removeItem("contents");
+    };
     return (
       <div className="container">
         <h1>

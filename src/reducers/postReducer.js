@@ -14,7 +14,6 @@ export default function(state = intialState, action) {
       };
 
     case NEW_POST:
-    console.log(action.payload)
       return {
         ...state,
         items: action.payload

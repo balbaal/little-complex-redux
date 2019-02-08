@@ -15,11 +15,21 @@ import { connect } from "react-redux";
 import { fetchPosts } from "../actions/postAction";
 
 class C_Home extends React.Component {
+  
+
   componentWillMount() {
-    this.props.fetchPosts();
+    if (localStorage.getItem("contents") == null) {
+      this.props.fetchPosts();
+      localStorage.setItem("contents", true);
+    }
+
   }
 
   render() {
+    // clear contents when close browser
+    window.onbeforeunload = function (){
+      localStorage.removeItem("contents")
+    }
     return (
       <div className="container">
         <Row>
