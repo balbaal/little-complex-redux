@@ -6,25 +6,53 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Form,
   FormGroup,
   Label,
   Input
 } from "reactstrap";
 
-import { fetchPosts } from "../actions/postAction";
+import { fetchPosts, newPost, deletePost } from "../actions/postAction";
 import { connect } from "react-redux";
 
 class C_ContentManage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modal: false
+      modal: false,
+      title: "",
+      description: "",
+      imageUrl: ""
     };
   }
 
   componentWillMount() {
     this.props.fetchPosts();
+  }
+
+  onChangeContent = ev => {
+    this.setState({
+      [ev.target.name]: ev.target.value
+    });
+  };
+
+  onSubmitContent = ev => {
+    ev.preventDefault();
+    let data = {
+      id: Math.floor(Math.random() * 50) + 1,
+      title: this.state.title,
+      description: this.state.description,
+      imageUrl: this.state.imageUrl
+    };
+
+    this.props.newPost(data);
+  };
+
+  onDeleteContent = id => {
+    this.props.deletePost(this.props.contents, id);
+  };
+
+  componentWillReceiveProps(newProps) {
+    this.props.contents.unshift(newProps.newContent);
   }
 
   toggle = () => {
@@ -34,7 +62,6 @@ class C_ContentManage extends React.Component {
   };
 
   render() {
-    console.log(this.props.contents);
     return (
       <div className="container">
         <h1>
@@ -63,9 +90,18 @@ class C_ContentManage extends React.Component {
                 <th scope="row">{index + 1}</th>
                 <td>{content.title}</td>
                 <td>{content.description}</td>
-                <td><img src={content.image} alt="image" /></td>
                 <td>
-                  <Button size="sm" color="danger">
+                  <img
+                    src={content.image}
+                    alt={`${content.id}_${content.title}`}
+                  />
+                </td>
+                <td>
+                  <Button
+                    onClick={() => this.onDeleteContent(content.id)}
+                    size="sm"
+                    color="danger"
+                  >
                     Delete
                   </Button>
                 </td>
@@ -77,28 +113,41 @@ class C_ContentManage extends React.Component {
         {/* MODAL
         ADD ITEM */}
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
-          <ModalHeader toggle={this.toggle}>Add Item</ModalHeader>
-          <ModalBody>
-            <Form>
+          <form onSubmit={this.onSubmitContent}>
+            <ModalHeader toggle={this.toggle}>Add Item</ModalHeader>
+            <ModalBody>
               <FormGroup>
                 <Label for="title">Title</Label>
-                <Input type="text" name="title" />
+                <Input
+                  type="text"
+                  onChange={this.onChangeContent}
+                  name="title"
+                />
               </FormGroup>
               <FormGroup>
                 <Label for="description">Description</Label>
-                <Input type="textarea" rows="5" name="description" />
+                <Input
+                  type="textarea"
+                  rows="5"
+                  name="description"
+                  onChange={this.onChangeContent}
+                />
               </FormGroup>
               <FormGroup>
                 <Label for="imageUrl">Image Url</Label>
-                <Input type="text" name="imageUrl" />
+                <Input
+                  type="text"
+                  name="imageUrl"
+                  onChange={this.onChangeContent}
+                />
               </FormGroup>
-            </Form>
-          </ModalBody>
-          <ModalFooter>
-            <Button color="primary" onClick={this.toggle}>
-              Submit
-            </Button>
-          </ModalFooter>
+            </ModalBody>
+            <ModalFooter>
+              <Button type="submit" onClick={this.toggle} color="primary">
+                Submit
+              </Button>
+            </ModalFooter>
+          </form>
         </Modal>
       </div>
     );
@@ -106,10 +155,11 @@ class C_ContentManage extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  contents: state.posts.items
+  contents: state.posts.items,
+  newContent: state.posts.item
 });
 
 export default connect(
   mapStateToProps,
-  { fetchPosts }
+  { fetchPosts, newPost, deletePost }
 )(C_ContentManage);

@@ -1,4 +1,4 @@
-import { FETCH_POSTS } from "./types";
+import { FETCH_POSTS, NEW_POST, DELETE_POST } from "./types";
 
 export const fetchPosts = () => dispatch => {
   dispatch({
@@ -43,3 +43,22 @@ export const fetchPosts = () => dispatch => {
     ]
   });
 };
+
+export const newPost = (data) => dispatch => {  
+  dispatch({
+    type: NEW_POST,
+    payload: data
+  })
+}
+
+export const deletePost = (contents, id) => dispatch => {
+  
+  let data = contents.filter((content) => {
+    return content.id !== id
+  })
+
+  dispatch({
+    type: DELETE_POST,
+    payload: data
+  })
+}
