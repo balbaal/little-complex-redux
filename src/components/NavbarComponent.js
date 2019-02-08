@@ -5,10 +5,8 @@ import {
   Collapse,
   Navbar,
   NavbarToggler,
-  NavbarBrand,
   Nav,
   NavItem,
-  NavLink
 } from "reactstrap";
 
 export default class C_Navbar extends React.Component {
@@ -30,21 +28,15 @@ export default class C_Navbar extends React.Component {
       <Fragment>
         <Navbar style={{marginBottom:"40px"}} expand="md">
           <div className="container">
-            <NavbarBrand>
-              <NL to="/">little redux</NL>
-            </NavbarBrand>
+              <NL className="navbar-brand" to="/">little redux</NL>
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
                 <NavItem>
-                  <NavLink>
-                    <NL to="/content_manage">Manage Content</NL>
-                  </NavLink>
+                <NL className="nav-link" to="/content_manage">Manage Content</NL>
                 </NavItem>
                 <NavItem>
-                  <NavLink>
-                    <NL to="/about">About</NL>
-                  </NavLink>
+                <NL className="nav-link" to="/about">About</NL>
                 </NavItem>
               </Nav>
             </Collapse>

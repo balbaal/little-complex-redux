@@ -11,50 +11,21 @@ import {
 } from "reactstrap";
 
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { fetchPosts } from "../actions/postAction";
 
 class C_Home extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      contents: [
-        {
-          id: 3837,
-          title: "Restful API /w NodeJS",
-          description:
-            "Some quick example text to build on the card title and make up the bulk of the card's content.",
-          image: `https://picsum.photos/200/150?image=${Math.floor(Math.random() * 50) + 1}`
-        },
-        {
-          id: 343,
-          title: "JWT Authentication",
-          description:
-            "Some quick example text to build on the card title and make up the bulk of the card's content.",
-          image: `https://picsum.photos/200/150?image=${Math.floor(Math.random() * 50) + 1}`
-        },
-        {
-          id: 12,
-          title: "Management State /w Redux",
-          description:
-            "Some quick example text to build on the card title and make up the bulk of the card's content.",
-          image: `https://picsum.photos/200/150?image=${Math.floor(Math.random() * 50) + 1}`
-        },
-        {
-          id: 33,
-          title: "Authorization, User Role",
-          description:
-            "Some quick example text to build on the card title and make up the bulk of the card's content.",
-          image: `https://picsum.photos/200/150?image=${Math.floor(Math.random() * 50) + 1}`
-        }
-      ]
-    };
+
+  componentWillMount() {
+    this.props.fetchPosts();
   }
   render() {
     return (
       <div className="container">
         <Row>
-          {this.state.contents.map(content => (
-            <Col sm="4" style={{ marginBottom: "20px" }}>
-              <Card key={content.id}>
+          {this.props.contents.map(content => (
+            <Col key={content.id} sm="4" style={{ marginBottom: "20px" }}>
+              <Card>
                 <CardImg
                   top
                   width="100%"
@@ -82,4 +53,11 @@ class C_Home extends React.Component {
   }
 }
 
-export default C_Home;
+const mapStateToProps = state => ({
+  contents: state.posts.items
+});
+
+export default connect(
+  mapStateToProps,
+  { fetchPosts }
+)(C_Home);

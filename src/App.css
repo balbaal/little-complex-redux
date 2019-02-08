@@ -35,36 +35,36 @@
 CUSTOM CSS
 =============== */
 
-*{
-  text-decoration: none
+* {
+  text-decoration: none;
 }
 
-.navbar{
-  background-color: #282c34!important;
+.navbar {
+  background-color: #282c34 !important;
 }
 
-.nav-link > a{
-  color: #61dafb
+.nav-link {
+  color: #61dafb;
 }
 
-.nav-link > a:hover{
+.nav-link:hover {
   color: #61dafb;
   font-weight: bold;
-  text-decoration: none
+  text-decoration: none;
 }
 
-.navbar-brand > a {
+.navbar-brand {
   color: #61dafb;
   font-weight: bold;
-  font-size: 40px;
+  font-size: 40px !important;
 }
-.navbar-brand > a:hover {
+.navbar-brand:hover {
   color: #61dafb;
   font-weight: bold;
-  text-decoration: none
+  text-decoration: none;
 }
 
-.nav-link > .active{
+.nav-link > .active {
   /* color: red; */
-  font-weight: bold
+  font-weight: bold;
 }

@@ -9,9 +9,11 @@ import {
   Form,
   FormGroup,
   Label,
-  Input,
-  FormText
+  Input
 } from "reactstrap";
+
+import { fetchPosts } from "../actions/postAction";
+import { connect } from "react-redux";
 
 class C_ContentManage extends React.Component {
   constructor(props) {
@@ -21,6 +23,10 @@ class C_ContentManage extends React.Component {
     };
   }
 
+  componentWillMount() {
+    this.props.fetchPosts();
+  }
+
   toggle = () => {
     this.setState(prevState => ({
       modal: !prevState.modal
@@ -28,6 +34,7 @@ class C_ContentManage extends React.Component {
   };
 
   render() {
+    console.log(this.props.contents);
     return (
       <div className="container">
         <h1>
@@ -51,39 +58,19 @@ class C_ContentManage extends React.Component {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>
-                <Button size="sm" color="danger">
-                  Delete
-                </Button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-              <td>
-                <Button size="sm" color="danger">
-                  Delete
-                </Button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-              <td>
-                <Button size="sm" color="danger">
-                  Delete
-                </Button>
-              </td>
-            </tr>
+            {this.props.contents.map((content, index) => (
+              <tr key={content.id}>
+                <th scope="row">{index + 1}</th>
+                <td>{content.title}</td>
+                <td>{content.description}</td>
+                <td><img src={content.image} alt="image" /></td>
+                <td>
+                  <Button size="sm" color="danger">
+                    Delete
+                  </Button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </Table>
 
@@ -118,4 +105,11 @@ class C_ContentManage extends React.Component {
   }
 }
 
-export default C_ContentManage;
+const mapStateToProps = state => ({
+  contents: state.posts.items
+});
+
+export default connect(
+  mapStateToProps,
+  { fetchPosts }
+)(C_ContentManage);
