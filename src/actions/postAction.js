@@ -45,11 +45,8 @@ export const fetchPosts = () => dispatch => {
 };
 
 export const newPost = (contents, newCont) => dispatch => {
-  console.log(newCont);
   if (newCont.id === 0) {
     newCont.id = Math.floor(Math.random() * 100) + 1;
-
-    console.log(newCont);
 
     let data = [...contents, newCont];
     dispatch({
@@ -57,14 +54,11 @@ export const newPost = (contents, newCont) => dispatch => {
       payload: data
     });
   } else {
-    console.log(newCont);
     let res = contents.filter(content => {
       return newCont.id !== content.id;
     });
-    console.log(res);
 
     let data = [...res, newCont];
-    console.log(data);
     dispatch({
       type: NEW_POST,
       payload: data
