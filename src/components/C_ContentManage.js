@@ -54,6 +54,10 @@ class C_ContentManage extends React.Component {
     this.props.deletePost(this.props.contents, id);
   };
 
+  onEditContent = id => {
+    alert(`edit content : ${id}`)
+  }
+
   toggle = () => {
     this.setState(prevState => ({
       modal: !prevState.modal
@@ -106,6 +110,13 @@ class C_ContentManage extends React.Component {
                     color="danger"
                   >
                     Delete
+                  </Button>
+                  <Button style={{display: "block", marginTop: "10px", width: "100%"}}
+                    onClick={() => this.onEditContent(content.id)}
+                    size="sm"
+                    color="primary"
+                  >
+                    Edit
                   </Button>
                 </td>
               </tr>
