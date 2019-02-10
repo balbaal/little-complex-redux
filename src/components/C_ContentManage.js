@@ -70,8 +70,6 @@ class C_ContentManage extends React.Component {
 
       let fox = "";
       fox = contentDetail[0].title;
-      console.log(fox);
-
       this.setState({
         title: contentDetail[0].title,
         description: contentDetail[0].description,
