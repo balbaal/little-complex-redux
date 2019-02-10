@@ -64,7 +64,7 @@ CUSTOM CSS
   text-decoration: none;
 }
 
-.nav-link > .active {
+.nav-item > .active {
   /* color: red; */
   font-weight: bold;
 }
