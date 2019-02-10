@@ -13,6 +13,7 @@ import {
 
 import { fetchPosts, newPost, deletePost } from "../actions/postAction";
 import { connect } from "react-redux";
+import { Helmet } from "react-helmet";
 
 class C_ContentManage extends React.Component {
   constructor(props) {
@@ -55,8 +56,8 @@ class C_ContentManage extends React.Component {
   };
 
   onEditContent = id => {
-    alert(`edit content : ${id}`)
-  }
+    alert(`edit content : ${id}`);
+  };
 
   toggle = () => {
     this.setState(prevState => ({
@@ -71,6 +72,9 @@ class C_ContentManage extends React.Component {
     };
     return (
       <div className="container">
+        <Helmet>
+          <title>Content Manage</title>
+        </Helmet>
         <h1>
           Manage Content Page{" "}
           <Button
@@ -111,7 +115,12 @@ class C_ContentManage extends React.Component {
                   >
                     Delete
                   </Button>
-                  <Button style={{display: "block", marginTop: "10px", width: "100%"}}
+                  <Button
+                    style={{
+                      display: "block",
+                      marginTop: "10px",
+                      width: "100%"
+                    }}
                     onClick={() => this.onEditContent(content.id)}
                     size="sm"
                     color="primary"

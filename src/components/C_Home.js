@@ -13,6 +13,7 @@ import {
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { fetchPosts } from "../actions/postAction";
+import {Helmet} from "react-helmet"
 
 class C_Home extends React.Component {
   
@@ -32,6 +33,9 @@ class C_Home extends React.Component {
     }
     return (
       <div className="container">
+      <Helmet>
+        <title>Home</title>
+      </Helmet>
         <Row>
           {this.props.contents.map(content => (
             <Col key={content.id} sm="4" style={{ marginBottom: "20px" }}>
