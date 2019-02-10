@@ -19,6 +19,8 @@ class C_ContentManage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      uniqueNumber: 0,
+      modalTitle: "Add Item",
       modal: false,
       title: "",
       description: "",
@@ -42,7 +44,7 @@ class C_ContentManage extends React.Component {
   onSubmitContent = ev => {
     ev.preventDefault();
     let data = {
-      id: Math.floor(Math.random() * 100) + 1,
+      id: this.state.uniqueNumber === 0 ? 0 : this.state.uniqueNumber,
       title: this.state.title,
       description: this.state.description,
       image: this.state.image
@@ -55,11 +57,35 @@ class C_ContentManage extends React.Component {
     this.props.deletePost(this.props.contents, id);
   };
 
-  onEditContent = id => {
-    alert(`edit content : ${id}`);
-  };
+  toggle = uniqueNumber => {
+    if (uniqueNumber > 0) {
+      this.setState({
+        uniqueNumber: uniqueNumber,
+        modalTitle: "Edit Item"
+      });
 
-  toggle = () => {
+      let contentDetail = this.props.contents.filter(content => {
+        return uniqueNumber === content.id;
+      });
+
+      let fox = "";
+      fox = contentDetail[0].title;
+      console.log(fox);
+
+      this.setState({
+        title: contentDetail[0].title,
+        description: contentDetail[0].description,
+        image: contentDetail[0].image
+      });
+    } else if (uniqueNumber === 0) {
+      this.setState({
+        uniqueNumber: uniqueNumber,
+        modalTitle: "Add Item",
+        title: "",
+        description: "",
+        image: ""
+      });
+    }
     this.setState(prevState => ({
       modal: !prevState.modal
     }));
@@ -80,7 +106,7 @@ class C_ContentManage extends React.Component {
           <Button
             style={{ fontWeight: "bold" }}
             color="primary"
-            onClick={this.toggle}
+            onClick={() => this.toggle(0)}
           >
             +
           </Button>
@@ -121,7 +147,7 @@ class C_ContentManage extends React.Component {
                       marginTop: "10px",
                       width: "100%"
                     }}
-                    onClick={() => this.onEditContent(content.id)}
+                    onClick={() => this.toggle(content.id)}
                     size="sm"
                     color="primary"
                   >
@@ -137,7 +163,9 @@ class C_ContentManage extends React.Component {
         ADD ITEM */}
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <form onSubmit={this.onSubmitContent}>
-            <ModalHeader toggle={this.toggle}>Add Item</ModalHeader>
+            <ModalHeader toggle={this.toggle}>
+              {this.state.modalTitle}
+            </ModalHeader>
             <ModalBody>
               <FormGroup>
                 <Label for="title">Title</Label>
@@ -145,6 +173,7 @@ class C_ContentManage extends React.Component {
                   type="text"
                   onChange={this.onChangeContent}
                   name="title"
+                  defaultValue={this.state.title}
                 />
               </FormGroup>
               <FormGroup>
@@ -154,6 +183,7 @@ class C_ContentManage extends React.Component {
                   rows="5"
                   name="description"
                   onChange={this.onChangeContent}
+                  defaultValue={this.state.description}
                 />
               </FormGroup>
               <FormGroup>
@@ -162,6 +192,7 @@ class C_ContentManage extends React.Component {
                   type="text"
                   name="image"
                   onChange={this.onChangeContent}
+                  defaultValue={this.state.image}
                 />
               </FormGroup>
             </ModalBody>
